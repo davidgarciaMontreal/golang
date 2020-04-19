@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-var palette = []color.Color{color.White, color.Black}
+var palette = []color.Color{color.RGBA{0x00, 0xff, 0x00, 0xff}, color.Black} // composite literals
 
 const (
 	whiteIndex = 0
@@ -29,9 +29,9 @@ func lissajous(out io.Writer) {
 		nframes = 64    // number of animation frames
 		delay   = 8     // delay between frames in 10ms units
 	)
-	freq := rand.Float64() * 3.0 // relative frequency of y oscillator
-	anim := gif.GIF{LoopCount: nframes}
-	phase := 0.0 // phase difference
+	freq := rand.Float64() * 3.0        // relative frequency of y oscillator
+	anim := gif.GIF{LoopCount: nframes} //struct git.GIF
+	phase := 0.0                        // phase difference
 	for i := 0; i < nframes; i++ {
 		rect := image.Rect(0, 0, 2*size+1, 2*size+1)
 		img := image.NewPaletted(rect, palette)
