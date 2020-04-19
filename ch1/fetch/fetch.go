@@ -4,13 +4,26 @@ import (
 	"fmt"
 	"io"
 	// "io/ioutil"
+	"bytes"
 	"net/http"
 	"os"
+	"strings"
 )
+
+const httpPrefix string = "http://"
 
 func main() {
 	for _, url := range os.Args[1:] {
-		resp, err := http.Get(url)
+		var theUrl bytes.Buffer
+		// func HasPrefix(s, prefix string) bool
+		if strings.HasPrefix(url, httpPrefix) {
+			theUrl.WriteString(url)
+		} else {
+			theUrl.WriteString(httpPrefix)
+			theUrl.WriteString(url)
+		}
+		resp, err := http.Get(theUrl.String())
+
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "fetch: %v", err)
 			os.Exit(1)
