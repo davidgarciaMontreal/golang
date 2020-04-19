@@ -36,5 +36,6 @@ func main() {
 			fmt.Fprintf(os.Stderr, "fetch: reading %s: %v\n", url, err)
 		}
 		fmt.Printf("\nNumber of bytes %d\n", n)
+		fmt.Printf("Status Code %d\n", resp.StatusCode)
 	}
 }
