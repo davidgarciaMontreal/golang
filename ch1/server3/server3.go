@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	l "github.com/davidgarciaMontreal/golang/ch1/lissajous"
 	"log"
 	"net/http"
+	"strconv"
+	"strings"
 	"sync"
 )
 
@@ -12,10 +15,22 @@ var count int
 
 func main() {
 	http.HandleFunc("/", handler)
+	http.HandleFunc("/lisa", lisa)
 	http.HandleFunc("/count", counter)
 	log.Fatal(http.ListenAndServe("localhost:8000", nil))
 }
 
+func lisa(w http.ResponseWriter, r *http.Request) {
+	c := 5
+	if err := r.ParseForm(); err != nil {
+		log.Print(err)
+	}
+	if val, ok := r.Form["cycle"]; ok {
+		s := strings.Join(val, "")
+		c, _ = strconv.Atoi(s)
+	}
+	l.Lissajous(w, c)
+}
 func handler(w http.ResponseWriter, r *http.Request) {
 	mu.Lock()
 	count++

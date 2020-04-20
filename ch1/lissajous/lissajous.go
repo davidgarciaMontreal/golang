@@ -59,9 +59,9 @@ const (
 )
 
 func main() {
-	Lissajous(os.Stdout)
+	Lissajous(os.Stdout, 5.0)
 }
-func Lissajous(out io.Writer) {
+func Lissajous(out io.Writer, new_cycles int) {
 	const (
 		cycles  = 5     // number of coplete x oscillator revolutions
 		res     = 0.001 // angular resolution
@@ -69,6 +69,12 @@ func Lissajous(out io.Writer) {
 		nframes = 64    // number of animation frames
 		delay   = 8     // delay between frames in 10ms units
 	)
+	var _cycles int
+	if new_cycles > 5 {
+		_cycles = new_cycles
+	} else {
+		_cycles = cycles
+	}
 	freq := rand.Float64() * 3.0        // relative frequency of y oscillator
 	anim := gif.GIF{LoopCount: nframes} //struct git.GIF
 	phase := 0.0                        // phase difference
@@ -82,7 +88,7 @@ func Lissajous(out io.Writer) {
 		// cindex = uint8(rvalue + min) //
 		// Fprintf(w io.Writer, format string, a ...interface{})
 		// fmt.Fprintf(os.Stderr, "i=%d,r=%d,cindex=%d\n", i, rvalue, cindex)
-		for t := 0.0; t < cycles*2*math.Pi; t += res {
+		for t := 0.0; t < float64(_cycles)*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
 			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
