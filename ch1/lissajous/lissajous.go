@@ -1,4 +1,4 @@
-package main
+package lissajous
 
 import (
 	"image"
