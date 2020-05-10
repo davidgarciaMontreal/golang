@@ -19,3 +19,15 @@ func KToC(k Kelvin) Celsius {
 func KToF(k Kelvin) Fahrenheit {
 	return Fahrenheit((k-273)*9/5 + 273)
 }
+func MToF(m Meter) Feet {
+	return Feet(m / 0.3048)
+}
+func FToM(f Feet) Meter {
+	return Meter(f * 0.3048)
+}
+func KiToP(k Kilogram) Pound {
+	return Pound(k * 2.2046)
+}
+func PToKi(p Pound) Kilogram {
+	return Kilogram(p / 2.2046)
+}
