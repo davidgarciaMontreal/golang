@@ -8,7 +8,12 @@ import (
 	"strconv"
 )
 
-func procString(x float64) {
+func procString(s string) {
+	x, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 	m := tempconv.Meter(x)
 	f := tempconv.Feet(x)
 	k := tempconv.Kilogram(x)
@@ -21,24 +26,13 @@ func procString(x float64) {
 func main() {
 	if n := len(os.Args[1:]); n == 0 {
 		input := bufio.NewScanner(os.Stdin)
-		fmt.Println("Zero Arguments need to read from STDIN")
+		// TODO: not sure if it can iterate over input.Scan and os.Args in procString...
 		for input.Scan() {
-			x := input.Text()
-			f, err := strconv.ParseFloat(x, 64)
-			if err != nil {
-				fmt.Println(err.Error())
-				continue
-			}
-			procString(f)
+			procString(input.Text())
 		}
 	} else {
 		for _, i := range os.Args[1:] {
-			f, err := strconv.ParseFloat(i, 64)
-			if err != nil {
-				fmt.Println(err.Error())
-				continue
-			}
-			procString(f)
+			procString(i)
 		}
 	}
 }
