@@ -31,6 +31,17 @@ func PopCountShift(x uint64) int {
 	return sum
 }
 
+func PopCountExpr(x uint64) int {
+	var sum int
+	defer elapsed(fmt.Sprintf("Expr PopCount for %d", x))()
+	for i := x; i >= 0; i = i & (i - 1) {
+		if i == 0 {
+			break
+		}
+		sum++
+	}
+	return sum
+}
 func PopCount(x uint64) int {
 	defer elapsed(fmt.Sprintf("Normal PopCount for %d", x))()
 	return int(pc[byte(x>>(0*8))] +
