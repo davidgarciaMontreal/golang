@@ -14,11 +14,23 @@ func elapsed(what string) func() {
 
 var pc [256]byte
 
+const one uint64 = 1
+
 func init() {
 	for i := range pc {
 		pc[i] = pc[i/2] + byte(i&1)
 	}
 }
+
+func PopCountShift(x uint64) int {
+	defer elapsed(fmt.Sprintf("Shift PopCount for %d", x))()
+	var sum int
+	for i := 0; i < 64; i++ {
+		sum += int(x & (one << i) >> i)
+	}
+	return sum
+}
+
 func PopCount(x uint64) int {
 	defer elapsed(fmt.Sprintf("Normal PopCount for %d", x))()
 	return int(pc[byte(x>>(0*8))] +
