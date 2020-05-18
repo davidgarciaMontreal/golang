@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"os"
 )
 
 const (
@@ -20,12 +21,20 @@ func main() {
 	fmt.Printf("<svg xmlns='http://www.w3.org/2000/svg' "+
 		"style='stroke: grey; fill: white; stroke-width: 0.7' "+
 		"width='%d' height='%d'>", width, height)
+NextCelli:
 	for i := 0; i < cells; i++ {
 		for j := 0; j < cells; j++ {
 			ax, ay := corner(i+1, j)
 			bx, by := corner(i, j)
 			cx, cy := corner(i, j+1)
 			dx, dy := corner(i+1, j+1)
+			polygonPoints := []float64{ax, ay, bx, by, cx, cy, dx, dy}
+			for i, v := range polygonPoints {
+				if math.IsNaN(v) || math.IsInf(v, 0) {
+					fmt.Fprintf(os.Stderr, "Index[%d] in polygonPoints is invalid.\n", i)
+					continue NextCelli
+				}
+			}
 			fmt.Printf("<polygon points='%g,%g %g,%g %g,%g %g,%g'/>\n",
 				ax, ay, bx, by, cx, cy, dx, dy)
 		}
