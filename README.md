@@ -21,7 +21,7 @@ fmt.Printf("%d %[1]o %#[1]o\n", o) // "438 666 0666"
 There are only two sizes of *floating-point numbers*: `float32` and `float64`  whose arithmentic proproperties are governed by the [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754) standard.
 * Limits are found in the `math package`: `math.MaxFloat32`, `math.MaxFloat64`.
 * Six decimal digits of precision and fifteen decimal digits of precision for float32 and float64 respectively.
-* The smallest positive integer cannot be represented as float32 is not large. 16777216 == 2^24 == 1 << 24. See good explanation [here](https://stackoverflow.com/questions/12596695/why-does-a-float-variable-stop-incrementing-at-16777216-in-c?noredirect=1). TL;DR: highest integer that can be converted as a float32 is `16777216` any value higher than this integer a float32 will be be able to represent it. Just try this `float32(16777216) == float32(16777216 + n)` where n = 1,2,.. For any n, it will be `true`.
+* The smallest positive integer cannot be represented as float32 is not large. 16777216 == 2^24 == 1 << 24. See good explanation [here](https://stackoverflow.com/questions/12596695/why-does-a-float-variable-stop-incrementing-at-16777216-in-c?noredirect=1). TL;DR: highest integer that can be converted as a float32 is `16777216` any value higher than this integer, a float32 will not be be able to represent it.Try `float32(16777216) == float32(16777216 + n)` where n = 1,2,.. For any n, it will be `true`.
 
 # General Notes
 ## [Code point](https://en.wikipedia.org/wiki/Code_point)
