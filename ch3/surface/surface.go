@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"strconv"
 )
 
 const (
@@ -22,8 +21,8 @@ func main() {
 	fmt.Printf("<svg xmlns='http://www.w3.org/2000/svg' "+
 		"style='stroke: grey; fill: white; stroke-width: 0.7' "+
 		"width='%d' height='%d'>", width, height)
-NextCelli:
 	for i := 0; i < cells; i++ {
+	NextCellJ:
 		for j := 0; j < cells; j++ {
 			ax, ay := corner(i+1, j)
 			bx, by := corner(i, j)
@@ -33,7 +32,7 @@ NextCelli:
 			for i, v := range polygonPoints {
 				if math.IsNaN(v) || math.IsInf(v, 0) {
 					fmt.Fprintf(os.Stderr, "Index[%d] in polygonPoints is invalid.\n", i)
-					continue NextCelli
+					continue NextCellJ
 				}
 			}
 			fmt.Printf("<polygon points='%g,%g %g,%g %g,%g %g,%g'/>\n",
